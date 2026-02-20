@@ -19,7 +19,7 @@ if (process.env.ENVIRONMENT === "dev") {
 
 app.use(express.json())
 
-app.use(express.static(path.join(getDirname(), './node_modules/lukepa-expense-ratio-split/dist')))
+app.use(express.static(path.join(getDirname(), './frontendBuild')))
 
 app.post('/state', async (req, res) => {
     try {
@@ -42,7 +42,7 @@ app.get('/state', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(getDirname(), "./node_modules/lukepa-expense-ratio-split/dist/index.html"))
+    res.sendFile(path.join(getDirname(), "./frontendBuild/index.html"))
 })
 
 

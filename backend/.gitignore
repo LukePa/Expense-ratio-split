@@ -1,4 +1,5 @@
 node_modules
 state.json
 dockerized_state.json
+frontendBuild
 .env

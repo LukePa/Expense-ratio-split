@@ -1,0 +1,2 @@
+"build_docker": "sudo docker build -t expense-ratio-split ."
+"run_docker": "sudo docker run -p 1111:1111 --mount type=bind,src=./dockerized_state.json,dst=/mnt/dockerized_state.json expense-ratio-split"
