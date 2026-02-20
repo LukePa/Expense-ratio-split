@@ -1,0 +1,34 @@
+{
+  "name": "expense-ratio-split-backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/LukePa/Expense-ratio-split-server-and-backend#readme",
+  "bugs": {
+    "url": "https://github.com/LukePa/Expense-ratio-split-server-and-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukePa/Expense-ratio-split-server-and-backend.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=prod node index.js",
+    "dev": "NODE_ENV=dev nodemon index.js",
+    "update-frontend": "npm update lukepa-expense-ratio-split",
+    "build_docker": "sudo docker build -t expense-ratio-split .",
+    "run_docker": "sudo docker run -p 1111:1111 --mount type=bind,src=./dockerized_state.json,dst=/mnt/dockerized_state.json expense-ratio-split"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "lukepa-expense-ratio-split": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
