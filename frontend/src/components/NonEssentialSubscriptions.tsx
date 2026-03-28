@@ -30,7 +30,7 @@ export default function NonEssentialSubscriptions({subscriptions, addSubscriptio
     
     return (
         <>
-            <Accordion title="Non Essential Subscriptions">
+            <Accordion title="Other Expenses">
                 <div className="flex flex-col items-stretch flex-1">
                     <div className="flex flex-col gap-5 items-stretch flex-1">
                         {subscriptions.map((subscription, index) => {

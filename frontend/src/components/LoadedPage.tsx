@@ -1,28 +1,24 @@
-import {use, useEffect, useState} from "react";
+import {use, useState} from "react";
 import type {IState, ISubscription} from "../interfaces/state";
 import {saveStateToStorage} from "../helpers/storage.ts";
 import OweSection from "./OweSection.tsx";
 import TitledMoneyAmountInput from "./TitledMoneyAmountInput.tsx";
 import Accordion from "./Accodion.tsx";
 import NonEssentialSubscriptions from "./NonEssentialSubscriptions.tsx";
+import IconButton from "./IconButton.tsx";
+import {faSave} from "@fortawesome/free-solid-svg-icons";
 
 
 interface Props {
     statePromise: Promise<IState>;
 }
 
-let debounceTimeoutId: number;
-
 export default function LoadedPage({statePromise}: Props) {
     const [state, setState] = useState(use(statePromise))
     
-    
-    useEffect(() => {
-        if (debounceTimeoutId) clearTimeout(debounceTimeoutId);
-        debounceTimeoutId = window.setTimeout(() => {
-            saveStateToStorage(state)
-        }, 1000)
-    }, [state])
+    const onSaveClick = () => {
+        saveStateToStorage(state)
+    }
 
     const setLukesWage = (value: number | undefined) => {
         setState({...state, lukeWage: value})
@@ -146,6 +142,13 @@ export default function LoadedPage({statePromise}: Props) {
                 updateSubscription={updateSubscription}
                 disabled={false}
             />
+            
+            <IconButton 
+                icon={faSave} 
+                onClick={onSaveClick}
+                label="Save"
+            />
+            
         </div>
     )
 }
