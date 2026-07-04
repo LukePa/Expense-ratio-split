@@ -1,10 +1,11 @@
 import fs from "fs"
 import getStatePath from "./getStatePath.js";
+import { uploadStateToBlob } from "./uploadStateToBlob.js";
 
 
 export async function setState(state) {
     if (verifyState(state)) {
-        fs.writeFileSync(getStatePath(), JSON.stringify(state));
+        await uploadStateToBlob(state)
         return true;
     }
     

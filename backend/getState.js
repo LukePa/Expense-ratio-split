@@ -1,15 +1,17 @@
 import fs from "fs";
-import getStatePath from "./getStatePath.js";
+import { uploadStateToBlob } from "./uploadStateToBlob.js";
+import { getEmptyStateObject } from "./getEmptyStateObject.js";
+import { getStateFromBlob } from "./getStateFromBlob.js";
 
 
-export default function getState() {
+export default async function getState() {
     let state = {};
     
     try {
-        const contents = fs.readFileSync(getStatePath());
-        state = JSON.parse(contents);
+        state = await getStateFromBlob();
     } catch (err) {
-        fs.writeFileSync(getStatePath(), "{}");
+        state = getEmptyStateObject();
+        await uploadStateToBlob(state)
     }
     
     return state;

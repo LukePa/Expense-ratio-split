@@ -36,15 +36,18 @@ app.post('/state', async (req, res) => {
     }
 })
 
-app.get('/state', (req, res) => {
+app.get('/state', async (req, res) => {
     res.contentType("application/json");
-    res.send(getState());
+    res.send(await getState());
 })
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(getDirname(), "./frontendBuild/index.html"))
 })
 
+app.post("/", (req, res) => {
+    res.send("Health Check Success")
+})
 
 app.listen(port, () => {
     console.log(`Expense ratio split listening on port ${port}`)

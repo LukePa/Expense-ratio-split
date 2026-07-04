@@ -1,2 +1,7 @@
 "build_docker": "sudo docker build -t expense-ratio-split ."
 "run_docker": "sudo docker run -p 1111:1111 --mount type=bind,src=./dockerized_state.json,dst=/mnt/dockerized_state.json expense-ratio-split"
+"tag_image": "sudo docker image tag expense-ratio-split lukepa/lukepa-expense-ratio-split:latest"
+"push_image": "sudo docker image push lukepa/lukepa-expense-ratio-split:latest"
+
+sudo docker run -p="1111:1111" --mount="type=bind,src=./dockerized_state.json,dst=/mnt/dockerized_state.json" expense-ratio-split
+sudo docker run -p="8080:1111" --mount="type=bind,src=./bucket/state.json,dst=/mnt/dockerized_state.json" lukepa/lukepa-expense-ratio-split
