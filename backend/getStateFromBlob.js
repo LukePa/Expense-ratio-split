@@ -1,7 +1,18 @@
+import { getBlobStorageContainer } from "./getBlobStorageContainer.js";
 import getStatePath from "./getStatePath.js"
-import fs from "fs"
 
 export async function getStateFromBlob() {
-    const contents = fs.readFileSync(getStatePath());
-    return JSON.parse(contents);
+    const container = await getBlobStorageContainer();
+    const blockBlobClient = container.getBlockBlobClient("state.json")
+    const contentsResponse = await blockBlobClient.download(0);
+    return JSON.parse(await streamToText(contentsResponse.readableStreamBody));
+}
+
+async function streamToText(readable) {
+  readable.setEncoding('utf8');
+  let data = '';
+  for await (const chunk of readable) {
+    data += chunk;
+  }
+  return data;
 }
