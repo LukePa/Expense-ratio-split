@@ -1,6 +1,17 @@
-FROM node:24-alpine3.21 AS builder
-WORKDIR /usr/local/app
+FROM node:24-bullseye-slim AS builder
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        python3 \
+        python3-pip \
+        ca-certificates \
+        curl && \
+    pip3 install --no-cache-dir azure-cli && \
+    apt-get purge -y curl && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/local/app
 COPY . .
 
 WORKDIR /usr/local/app/backend
