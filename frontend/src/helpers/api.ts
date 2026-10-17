@@ -9,6 +9,7 @@ export async function getStateFromApi(): Promise<IState> {
             'Accept': 'application/json',
         }
     });
+    if (!res.ok) throw new Error(`Failed to load state: ${res.status}`);
     const body = await res.json()
     return formatStateFromApi(body)
 }
@@ -16,7 +17,7 @@ export async function getStateFromApi(): Promise<IState> {
 
 
 export async function saveStateToApi(state: IState) {
-    await fetch(url, {
+    const res = await fetch(url, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -24,6 +25,7 @@ export async function saveStateToApi(state: IState) {
         },
         body: JSON.stringify(state),
     })
+    if (!res.ok) throw new Error(`Failed to save state: ${res.status}`);
 }
 
 

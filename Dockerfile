@@ -23,6 +23,8 @@ RUN npm run build
 
 WORKDIR /usr/local/app
 ENV NODE_ENV=production
+# Set explicitly so a stray .env can never enable dev mode (which bypasses auth)
+ENV ENVIRONMENT=prod
 ENV STATE_FILE_PATH=/mnt/dockerized_state.json
 ENV PORT=1111
 #Expose running port

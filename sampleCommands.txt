@@ -5,3 +5,11 @@
 
 sudo docker run -p="1111:1111" --mount="type=bind,src=./dockerized_state.json,dst=/mnt/dockerized_state.json" expense-ratio-split
 sudo docker run -p="8080:1111" --mount="type=bind,src=./bucket/state.json,dst=/mnt/dockerized_state.json" lukepa/lukepa-expense-ratio-split
+
+# --- Google auth on Azure Container Apps (Easy Auth) ---
+# Google Cloud Console: create an OAuth client ID (Web application), redirect URI:
+#   https://<app-fqdn>/.auth/login/google/callback
+az containerapp auth google update -g <rg> -n <app> --client-id <id> --client-secret <secret> --yes
+az containerapp auth update -g <rg> -n <app> --enabled true --unauthenticated-client-action RedirectToLoginPage --redirect-provider google
+# Allowlist (comma separated; empty = nobody gets in)
+az containerapp update -g <rg> -n <app> --set-env-vars ALLOWED_EMAILS="a@gmail.com,b@gmail.com"

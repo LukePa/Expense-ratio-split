@@ -17,7 +17,10 @@ export default function LoadedPage({statePromise}: Props) {
     const [state, setState] = useState(use(statePromise))
     
     const onSaveClick = () => {
-        saveStateToStorage(state)
+        saveStateToStorage(state).catch((error) => {
+            console.error(error);
+            alert("Save failed - you may need to sign in again.");
+        })
     }
 
     const setLukesWage = (value: number | undefined) => {
@@ -148,7 +151,12 @@ export default function LoadedPage({statePromise}: Props) {
                 onClick={onSaveClick}
                 label="Save"
             />
-            
+
+            {import.meta.env.PROD &&
+                <a href="/.auth/logout?post_logout_redirect_uri=/" className="text-center underline text-sm">
+                    Sign out
+                </a>
+            }
         </div>
     )
 }

@@ -5,6 +5,7 @@ import getState from "./getState.js";
 import {setState, verifyState} from "./setState.js";
 import dotenv from "dotenv";
 import {getDirname} from "./helpers.js";
+import {requireAllowedUser} from "./auth.js";
 
 dotenv.config();
 
@@ -18,6 +19,13 @@ if (process.env.ENVIRONMENT === "dev") {
 
 
 app.use(express.json())
+
+// Health check stays above auth: probes bypass Easy Auth and carry no identity headers
+app.post("/", (req, res) => {
+    res.send("Health Check Success")
+})
+
+app.use(requireAllowedUser)
 
 app.use(express.static(path.join(getDirname(), './frontendBuild')))
 
@@ -41,12 +49,12 @@ app.get('/state', async (req, res) => {
     res.send(await getState());
 })
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(getDirname(), "./frontendBuild/index.html"))
+app.get('/me', (req, res) => {
+    res.send({email: req.userEmail ?? null});
 })
 
-app.post("/", (req, res) => {
-    res.send("Health Check Success")
+app.get('/', (req, res) => {
+    res.sendFile(path.join(getDirname(), "./frontendBuild/index.html"))
 })
 
 app.listen(port, () => {
