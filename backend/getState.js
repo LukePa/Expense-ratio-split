@@ -10,6 +10,8 @@ export default async function getState() {
     try {
         state = await getStateFromBlob();
     } catch (err) {
+        // Only initialise when the blob genuinely doesn't exist; any other error must not overwrite real data
+        if (err.statusCode !== 404) throw err;
         state = getEmptyStateObject();
         await uploadStateToBlob(state)
     }

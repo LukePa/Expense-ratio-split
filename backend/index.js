@@ -45,8 +45,13 @@ app.post('/state', async (req, res) => {
 })
 
 app.get('/state', async (req, res) => {
-    res.contentType("application/json");
-    res.send(await getState());
+    try {
+        res.contentType("application/json");
+        res.send(await getState());
+    } catch (e) {
+        console.error(e);
+        res.status(500).send({success: false, reason: "Internal Server Error"})
+    }
 })
 
 app.get('/me', (req, res) => {
